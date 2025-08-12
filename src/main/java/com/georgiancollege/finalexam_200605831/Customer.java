@@ -36,4 +36,14 @@ public class Customer {
     public List<Product> getPurchasedProducts() {
         return purchasedProducts;
     }
+
+    public double getTotalPurchases() {
+        if (purchasedProducts == null) {
+            return 0.0;
+        }
+        return purchasedProducts.stream()
+                .mapToDouble(Product::getSalePrice)
+                .sum();
+    }
+
 }
