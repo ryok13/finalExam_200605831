@@ -62,6 +62,7 @@ public class TableViewController {
                 System.out.println("selected purchases size = " + newSel.getPurchases().size());
                 purchaseListView.getItems().setAll(newSel.getPurchases());
             }
+            updatePurchaseLabels(newSel);
         });
 
         tableView.getItems().addListener((ListChangeListener<Customer>) c -> updateRowCountLabel());
@@ -78,6 +79,7 @@ public class TableViewController {
             var customers = JsonReader.loadCustomers();
             tableView.getItems().setAll(customers);
             updateRowCountLabel();
+            tableView.getSelectionModel().selectFirst();
         } catch (Exception e) {
             rowsInTableLabel.setText("Failed to load customers.json");
             e.printStackTrace();
@@ -86,6 +88,29 @@ public class TableViewController {
 
     private void updateRowCountLabel() {
         rowsInTableLabel.setText("Rows in table: " + tableView.getItems().size());
+    }
+
+    private void updatePurchaseLabels(Customer c) {
+        if (c == null) {
+            msrpLabel.setText("Total regular price: $0.00");
+            saleLabel.setText("Total sale price: $0.00");
+            savingsLabel.setText("Total savings: $0.00");
+            return;
+        }
+
+        double totalRegular = c.getPurchases().stream()
+                .mapToDouble(Product::getRegularPrice)
+                .sum();
+
+        double totalSale = c.getPurchases().stream()
+                .mapToDouble(Product::getSalePrice)
+                .sum();
+
+        double totalSavings = Math.max(0.0, totalRegular - totalSale);
+
+        msrpLabel.setText(String.format("Total regular price: $%.2f", totalRegular));
+        saleLabel.setText(String.format("Total sale price: $%.2f", totalSale));
+        savingsLabel.setText(String.format("Total savings: $%.2f", totalSavings));
     }
 
 }
