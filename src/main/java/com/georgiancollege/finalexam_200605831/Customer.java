@@ -46,4 +46,12 @@ public class Customer {
                 .sum();
     }
 
+    public double getTotalSaved() {
+        if (purchasedProducts == null) {
+            return 0.0;
+        }
+        return purchasedProducts.stream()
+                .mapToDouble(p -> Math.max(0.0, p.getRegularPrice() - p.getSalePrice()))
+                .sum();
+    }
 }
