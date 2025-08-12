@@ -7,6 +7,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 
 public class TableViewController {
@@ -46,11 +47,29 @@ public class TableViewController {
     @FXML
     private ImageView imageView;
 
-
+    @FXML
+    public void initialize() {
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        totalPurchaseColumn.setCellValueFactory(
+                new PropertyValueFactory<>("totalPurchasesFormatted"));
+        loadAllCustomers();
+    }
 
     @FXML
     private void loadAllCustomers()
     {
         System.out.println("called method loadAllCustomers");
+
+        try {
+            var customers = JsonReader.loadCustomers();
+            tableView.getItems().setAll(customers);
+            rowsInTableLabel.setText("Rows in table: " + customers.size());
+        } catch (Exception e) {
+            rowsInTableLabel.setText("Failed to load customers.json");
+            e.printStackTrace();
+        }
     }
 }
