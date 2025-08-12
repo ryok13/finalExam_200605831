@@ -2,6 +2,7 @@
 
 package com.georgiancollege.finalexam_200605831;
 
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -53,8 +54,10 @@ public class TableViewController {
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-        totalPurchaseColumn.setCellValueFactory(
-                new PropertyValueFactory<>("totalPurchasesFormatted"));
+        totalPurchaseColumn.setCellValueFactory(new PropertyValueFactory<>("totalPurchasesFormatted"));
+
+        tableView.getItems().addListener((ListChangeListener<Customer>) c -> updateRowCountLabel());
+
         loadAllCustomers();
     }
 
@@ -66,10 +69,15 @@ public class TableViewController {
         try {
             var customers = JsonReader.loadCustomers();
             tableView.getItems().setAll(customers);
-            rowsInTableLabel.setText("Rows in table: " + customers.size());
+            updateRowCountLabel();
         } catch (Exception e) {
             rowsInTableLabel.setText("Failed to load customers.json");
             e.printStackTrace();
         }
     }
+
+    private void updateRowCountLabel() {
+        rowsInTableLabel.setText("Rows in table: " + tableView.getItems().size());
+    }
+
 }

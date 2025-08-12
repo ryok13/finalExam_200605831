@@ -9,14 +9,14 @@ public class Customer {
     private int id;
     private String firstName;
     private String lastName;
-    private String phone;
-    private final List<Product> purchasedProducts = new ArrayList<>();
+    private String phoneNumber;
+    private final List<Product> purchases = new ArrayList<>();
 
-    public Customer(int id, String firstName, String lastName, String phone) {
+    public Customer(int id, String firstName, String lastName, String phoneNumber) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.phone = phone;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getFirstName() {
@@ -31,30 +31,30 @@ public class Customer {
         return lastName;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public List<Product> getPurchasedProducts() {
-        return purchasedProducts;
+    public List<Product> getPurchases() {
+        return purchases;
     }
 
     // Question 4.1
     public double getTotalPurchases() {
-        if (purchasedProducts == null) {
+        if (purchases == null) {
             return 0.0;
         }
-        return purchasedProducts.stream()
+        return purchases.stream()
                 .mapToDouble(Product::getSalePrice)
                 .sum();
     }
 
     // Question 4.2
     public double getTotalSaved() {
-        if (purchasedProducts == null) {
+        if (purchases == null) {
             return 0.0;
         }
-        return purchasedProducts.stream()
+        return purchases.stream()
                 .mapToDouble(p -> Math.max(0.0, p.getRegularPrice() - p.getSalePrice()))
                 .sum();
     }
@@ -62,5 +62,9 @@ public class Customer {
     // Question 4.3
     public boolean savedFiveOrMore() {
         return getTotalSaved() >= 5.0;
+    }
+
+    public String getTotalPurchasesFormatted() {
+        return String.format("$%.2f", getTotalPurchases());
     }
 }
