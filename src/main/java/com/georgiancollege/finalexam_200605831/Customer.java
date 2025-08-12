@@ -56,4 +56,9 @@ public class Customer {
                 .mapToDouble(p -> Math.max(0.0, p.getRegularPrice() - p.getSalePrice()))
                 .sum();
     }
+
+    // Question 4.3
+    public boolean savedFiveOrMore() {
+        return getTotalSaved() >= 5.0;
+    }
 }
