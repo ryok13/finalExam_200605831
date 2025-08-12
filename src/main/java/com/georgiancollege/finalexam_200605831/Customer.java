@@ -37,6 +37,7 @@ public class Customer {
         return purchasedProducts;
     }
 
+    // Question 4.1
     public double getTotalPurchases() {
         if (purchasedProducts == null) {
             return 0.0;
@@ -46,6 +47,7 @@ public class Customer {
                 .sum();
     }
 
+    // Question 4.2
     public double getTotalSaved() {
         if (purchasedProducts == null) {
             return 0.0;
