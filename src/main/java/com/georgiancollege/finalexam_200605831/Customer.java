@@ -1,3 +1,5 @@
+// Ryo Kato, 200605831
+
 package com.georgiancollege.finalexam_200605831;
 
 import java.util.ArrayList;
