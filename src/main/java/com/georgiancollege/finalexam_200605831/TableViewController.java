@@ -56,6 +56,14 @@ public class TableViewController {
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         totalPurchaseColumn.setCellValueFactory(new PropertyValueFactory<>("totalPurchasesFormatted"));
 
+        tableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
+            purchaseListView.getItems().clear();
+            if (newSel != null) {
+                System.out.println("selected purchases size = " + newSel.getPurchases().size());
+                purchaseListView.getItems().setAll(newSel.getPurchases());
+            }
+        });
+
         tableView.getItems().addListener((ListChangeListener<Customer>) c -> updateRowCountLabel());
 
         loadAllCustomers();

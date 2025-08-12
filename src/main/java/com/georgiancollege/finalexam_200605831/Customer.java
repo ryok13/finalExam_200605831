@@ -10,8 +10,9 @@ public class Customer {
     private String firstName;
     private String lastName;
     private String phoneNumber;
-    private final List<Product> purchases = new ArrayList<>();
+    private List<Product> purchases = new ArrayList<>();
 
+    public Customer() {}
     public Customer(int id, String firstName, String lastName, String phoneNumber) {
         this.id = id;
         this.firstName = firstName;
