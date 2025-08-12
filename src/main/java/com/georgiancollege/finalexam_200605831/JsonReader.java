@@ -12,7 +12,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class JsonReader {
-    private static final Gson gson = new Gson();
     public static List<Customer> loadCustomers() throws IOException {
         try (InputStream is = JsonReader.class.getResourceAsStream("/customers.json")) {
             if (is == null) throw new FileNotFoundException("customers.json not found");
