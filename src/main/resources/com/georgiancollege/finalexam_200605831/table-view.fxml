@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.georgiancollege.finalexam_200605831.TableViewController">
+<AnchorPane prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.georgiancollege.finalexam_200605831.TableViewController">
    <children>
       <VBox alignment="CENTER" layoutX="22.0" layoutY="31.0" prefHeight="400.0" prefWidth="1000.0" spacing="40.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -60,6 +60,7 @@
             <HBox spacing="20.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#loadAllCustomers" prefWidth="300.0" text="All Customers" />
+                  <Button mnemonicParsing="false" onAction="#loadSavedFiveOrMore" prefWidth="300.0" text="Customers who saved over $5" />
                </children>
             </HBox>
          </children>

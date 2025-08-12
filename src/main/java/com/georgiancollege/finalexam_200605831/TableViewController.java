@@ -49,6 +49,33 @@ public class TableViewController {
     private ImageView imageView;
 
     @FXML
+    private void loadSavedFiveOrMore() {
+        try {
+            var customers = JsonReader.loadCustomers();
+
+            var filtered = customers.stream()
+                    .filter(Customer::savedFiveOrMore)
+                    .toList();
+
+            tableView.getItems().setAll(filtered);
+            updateRowCountLabel();
+
+            if (!filtered.isEmpty()) {
+                tableView.getSelectionModel().selectFirst();
+            } else {
+                purchaseListView.getItems().clear();
+                updatePurchaseLabels(null);
+            }
+
+            System.out.println("Filtered customers (saved >= $5): " + filtered.size());
+        } catch (Exception e) {
+            rowsInTableLabel.setText("Failed to filter customers");
+            e.printStackTrace();
+        }
+    }
+
+
+    @FXML
     public void initialize() {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
