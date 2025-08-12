@@ -103,10 +103,19 @@ public class TableViewController {
         System.out.println("called method loadAllCustomers");
 
         try {
+            tableView.getSelectionModel().clearSelection();
+
             var customers = JsonReader.loadCustomers();
             tableView.getItems().setAll(customers);
+
             updateRowCountLabel();
-            tableView.getSelectionModel().selectFirst();
+
+            if (!customers.isEmpty()) {
+                tableView.getSelectionModel().selectFirst();
+            } else {
+                purchaseListView.getItems().clear();
+                updatePurchaseLabels(null);
+            }
         } catch (Exception e) {
             rowsInTableLabel.setText("Failed to load customers.json");
             e.printStackTrace();
