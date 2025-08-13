@@ -83,13 +83,22 @@ public class TableViewController {
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         totalPurchaseColumn.setCellValueFactory(new PropertyValueFactory<>("totalPurchasesFormatted"));
 
+        imageView.setVisible(false);
+
         tableView.getSelectionModel().selectedItemProperty().addListener((obs, oldSel, newSel) -> {
             purchaseListView.getItems().clear();
+            purchaseListView.getSelectionModel().clearSelection();
+            clearImage();
+
             if (newSel != null) {
                 System.out.println("selected purchases size = " + newSel.getPurchases().size());
                 purchaseListView.getItems().setAll(newSel.getPurchases());
             }
             updatePurchaseLabels(newSel);
+        });
+
+        purchaseListView.getSelectionModel().selectedItemProperty().addListener((obs, oldP, newP) -> {
+            showProductImage(newP);
         });
 
         tableView.getItems().addListener((ListChangeListener<Customer>) c -> updateRowCountLabel());
@@ -147,6 +156,27 @@ public class TableViewController {
         msrpLabel.setText(String.format("Total regular price: $%.2f", totalRegular));
         saleLabel.setText(String.format("Total sale price: $%.2f", totalSale));
         savingsLabel.setText(String.format("Total savings: $%.2f", totalSavings));
+    }
+
+    private void showProductImage(Product p) {
+        if (p == null) { clearImage(); return; }
+
+        String url = p.getImage();
+
+        if (url == null || url.isBlank()) { clearImage(); return; }
+
+        try {
+            javafx.scene.image.Image img = new javafx.scene.image.Image(url, true);
+            imageView.setImage(img);
+            imageView.setVisible(true);
+        } catch (Exception e) {
+            clearImage();
+        }
+    }
+
+    private void clearImage() {
+        imageView.setImage(null);
+        imageView.setVisible(false);
     }
 
 }

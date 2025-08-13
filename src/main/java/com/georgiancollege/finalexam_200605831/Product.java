@@ -7,20 +7,20 @@ public class Product {
   private String name;
   private double salePrice;
   private double regularPrice;
-  private String images;
+  private String image;
 
   public Product() { }
 
-  public Product(String sku, String name, double salePrice, double regularPrice, String images) {
+  public Product(String sku, String name, double salePrice, double regularPrice, String image) {
     this.sku = sku;
     this.name = name;
     this.salePrice = salePrice;
     this.regularPrice = regularPrice;
-    this.images = images;
+    this.image = image;
   }
 
-  public String getImages() {
-    return images;
+  public String getImage() {
+    return image;
   }
 
   public String getName() {
